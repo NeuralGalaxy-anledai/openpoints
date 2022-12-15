@@ -51,10 +51,10 @@ def load_data(data_dir, partition, train_subject_num, num_points):
 @DATASETS.register_module()
 class Bosphorus(Dataset):
     """
-    This is the data loader for ModelNet 40
-    ModelNet40 contains 12,311 meshed CAD models from 40 categories.
+    This is the data loader for Bosphorus Dataset
     num_points: 1024 by default
     data_dir
+    train_subject_num: how many subject in train group
     paritition: train or test
     """
 
