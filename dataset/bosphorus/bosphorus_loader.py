@@ -23,7 +23,7 @@ CLASS_CODES = {
 BOSPHORUS_TOTAL_SUBJECT_NUM = 105
 
 
-def load_data(data_dir, partition, train_subject_num):
+def load_data(data_dir, partition, train_subject_num, num_points):
     all_data = []
     all_label = []
     data_dir = Path(data_dir)
@@ -37,11 +37,14 @@ def load_data(data_dir, partition, train_subject_num):
             nrows, ncols, data = read_bntfile(f)
             data = data[:, :3]
             # remove all zero points
-            data = data[data.sum(1)!=0,:]
+            data = data[data.sum(1) != 0, :]
+            data = data[:num_points, :]
             label_str = f.name.split('_')[2]
             label = CLASS_CODES.get(label_str)
             all_data.append(data)
             all_label.append(label)
+    all_data = np.array(all_data)
+    all_label = np.array(label)
     return all_data, all_label
 
 
@@ -63,7 +66,7 @@ class Bosphorus(Dataset):
                  transform=None
                  ):
         self.partition = 'train' if split.lower() == 'train' else 'test'  # val = test
-        self.data, self.label = load_data(data_dir, self.partition, train_subject_num)
+        self.data, self.label = load_data(data_dir, self.partition, train_subject_num, num_points)
         self.num_points = num_points
         logging.info(f'==> sucessfully loaded {self.partition} data')
         self.transform = transform
