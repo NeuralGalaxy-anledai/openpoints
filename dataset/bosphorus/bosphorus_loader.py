@@ -9,7 +9,7 @@ import torch
 from torch.utils.data import Dataset
 from ..build import DATASETS
 
-from readbnt import read_bntfile
+from .read_bnt import read_bntfile
 
 
 CLASS_CODES = {
@@ -63,7 +63,7 @@ class Bosphorus(Dataset):
                  transform=None
                  ):
         self.partition = 'train' if split.lower() == 'train' else 'test'  # val = test
-        self.data, self.label = load_data(data_dir, self.partition)
+        self.data, self.label = load_data(data_dir, self.partition, train_subject_num)
         self.num_points = num_points
         logging.info(f'==> sucessfully loaded {self.partition} data')
         self.transform = transform

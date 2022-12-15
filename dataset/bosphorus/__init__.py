@@ -1,1 +1,1 @@
-from bosphorus_loader import Bosphorus
+from .bosphorus_loader import Bosphorus
