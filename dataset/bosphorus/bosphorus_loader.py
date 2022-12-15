@@ -15,10 +15,10 @@ from .read_bnt import read_bntfile
 CLASS_CODES = {
     'ANGER': 0,
     'DISGUST': 1,
-    'FEAR': 3,
-    'HAPPY': 4,
-    'SADNESS': 5,
-    'SURPRISE': 6
+    'FEAR': 2,
+    'HAPPY': 3,
+    'SADNESS': 4,
+    'SURPRISE': 5
 }
 BOSPHORUS_TOTAL_SUBJECT_NUM = 105
 
@@ -44,7 +44,7 @@ def load_data(data_dir, partition, train_subject_num, num_points):
             all_data.append(data)
             all_label.append(label)
     all_data = np.array(all_data)
-    all_label = np.array(label)
+    all_label = np.array(all_label)
     return all_data, all_label
 
 
