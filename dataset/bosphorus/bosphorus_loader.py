@@ -1,6 +1,3 @@
-"""Modified from DeepGCN and DGCNN
-Reference: https://github.com/lightaime/deep_gcns_torch/tree/master/examples/classification
-"""
 import os
 import numpy as np
 import logging
@@ -38,7 +35,7 @@ def load_data(data_dir, partition, train_subject_num, num_points):
             data = data[:, :3]
             # remove all zero points
             data = data[data.sum(1) != 0, :]
-            data = data[:num_points, :]
+            data = data[np.random.choice(data.shape[0], num_points, replace=False), :]
             label_str = f.name.split('_')[2]
             label = CLASS_CODES.get(label_str)
             all_data.append(data)
@@ -65,6 +62,7 @@ class Bosphorus(Dataset):
                  split='train',
                  transform=None
                  ):
+        np.random.seed(49)
         self.partition = 'train' if split.lower() == 'train' else 'test'  # val = test
         self.data, self.label = load_data(data_dir, self.partition, train_subject_num, num_points)
         self.num_points = num_points
