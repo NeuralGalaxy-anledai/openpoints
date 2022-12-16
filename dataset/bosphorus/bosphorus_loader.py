@@ -24,10 +24,20 @@ def load_data(data_dir, partition, train_subject_num, num_points):
     all_data = []
     all_label = []
     data_dir = Path(data_dir)
+
+    toltol_subject_list = np.arange(BOSPHORUS_TOTAL_SUBJECT_NUM)
+    train_subject_list = np.random.choice(
+        BOSPHORUS_TOTAL_SUBJECT_NUM,
+        train_subject_num,
+        replace=False
+    )
+    test_subject_list = np.setdiff1d(toltol_subject_list, train_subject_list)
+
     if partition == 'train':
-        subject_list = [f'bs{num:0>3d}' for num in range(train_subject_num)]
+        subject_list = [f'bs{num:0>3d}' for num in train_subject_list]
     else:
-        subject_list = [f'bs{num:0>3d}' for num in range(train_subject_num, BOSPHORUS_TOTAL_SUBJECT_NUM)]
+        subject_list = [f'bs{num:0>3d}' for num in test_subject_list]
+
     for subject in subject_list:
         subject_dir = data_dir / subject
         for f in subject_dir.glob("*.bnt"):
